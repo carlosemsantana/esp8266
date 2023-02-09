@@ -12,7 +12,7 @@ Neste artigo, exploraremos o potencial do ESP8266 e do MicroPython para o desenv
 **Definição do problema**
 
 
-Pessoa idosa mora sozinha e, frequentemente, esquece de desligar o gás do fogão. Isso pode se tornar perigoso, pois o vazamento de gás pode causar acidentes e até mesmo mortes. Além disso, a fumaça do gás pode causar problemas respiratórios, afetando a saúde da pessoa idosa. Por isso, é importante que seja encontrada uma solução para o problema, garantindo a segurança da pessoa idosa e a sua saúde.
+Pessoa mora sozinha e, frequentemente, esquece de desligar o gás do fogão. Isso pode se tornar perigoso, pois o vazamento de gás pode causar acidentes e até mesmo mortes. Além disso, a fumaça do gás pode causar problemas respiratórios, afetando a saúde da pessoa. Por isso, é importante que seja encontrada uma solução para o problema.
 
 
 Caso não seja encontrada uma solução urgente para o problema, as principais consequências são:
@@ -50,6 +50,45 @@ Esta prova de conceito visa avaliar se a IoT pode ser usada para detectar e cont
 
 
 **Cenário atual**
+
+
+Ambiente com risco de incêndio, devido falta de equipamentos de controle. Caso ocorra esquecimento do gás aberto, a área está sujeita a altos níveis de monóxido de carbono que podem ser perigosos para a saúde.
+
+
+**Cenário futuro**
+
+
+A automação da cozinha é uma ótima maneira de garantir segurança e ajudar a evitar vazamentos, pois ela oferece melhores soluções para a detecção e monitoramento de problemas no funcionamento dos equipamentos que usam gás.
+
+No exemplo ilustrado na figura 2., a solução proposta e implementada foi instalação dos sequintes dispositivos: 
+
+(1) válvula solenoide de controle corte e bloqueio de gás GLP; 
+
+(2) Sensor detector de gás natuaral e GLP;
+
+(3) Dispositivo (IoT) ESP8266 com software embarcado em Python, com a função de monitoramento e envio de mensagens de alertas sempre que um incidente ocorrer.
+
+
+**Dispositivos e fluxo dos eventos**
+
+
+<img src="img/fig2.png"  width="98%"  style="display:inline-block;float:center; margin-right:10px;">
+
+
+**Funcionamento**
+
+
+O Dispositivo com sensor de gás é instalado na cozinha e próximo ao fogão. Este dispositivo tem um sensor que "sente" a presença de gás no ambiente, devido a vazamento ou valvulas de fogão que ficou aberta, e o sensor envia um sinal para válvula solenoide, instalada no regulador de gás que bloqueia a passagem mediatamente, evitando uma explosão, o sensor também emite sinal sonoro avisado do problema encontrado no ambiente. O sistema só volta a normalidade rearmando o sistema Shut-off que existe na válvula através de um botão vermelho.
+
+
+**Implantação**
+
+
+Esta prova de conceito foi implementada em duas fases: Na primeira fase, foi instalada a válvula solenoide no registro do botijão e o sensor de gás próximo ao fogão.
+
+
+
+(EM DESENVOLVIMENTO)
 
 ```python
 
