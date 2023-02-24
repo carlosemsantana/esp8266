@@ -88,7 +88,61 @@ Esta prova de conceito foi implementada em duas fases: Na primeira fase, foi ins
 
 
 
-(EM DESENVOLVIMENTO)
+**Recomendações**
+
+Leitura, entendimento e aplicação das Normas Regulamentadoras NR-10 e NR-12, para que possam cumprir com a segurança necessária a instalação dos equipamentos e sensores;
+
+**Consulte a especificação técnica dos sensores fornecida pelo fabricante**
+
+**Requisitos**
+
+Limites para instalação dos sensores detectores de Gás GLP; (GLP é mais denso do que o ar atmosférico. Portanto, o detector deve estar posicionado próximo ao chão);
+    
+Limites e calibragem do aparelho; (A calibragem do equipemento é de extrema importância, pois o aparelho precisa funcionar perfeitamente. Um erro na identificação dos limites de inflamabilidade pode ocasionar um acidente);
+
+
+
+**Posicionamento do sensor**
+
+
+De acordo com o fabricante o sensor detecção de gás deve estar no mínimo 80 cm distância do fogão e a 30 cm de altura do chão, conforme figura 3.
+
+
+<img src="img/fig3.png"  width="98%"  style="display:inline-block;float:center; margin-right:10px;">
+
+
+**Resuldados**
+
+
+Após implantação do sistema de detecção, em um período de 30 dia de testes. Houveram 3 alertas de vazamento, o sistema de controle foi acionado, o atuador no registro do gás foi acionado, interrompendo o fluxo de gás com sucesso.
+
+
+**Satisfação do cliente**
+
+Do ponto de vista técnico, o sistema funcionou perfeitamente, porém, o cliente não estava satisfeito, o motivo da insatisfação do cliente foi, o alarme sonoro do dispositivo lhe causava incômodo.
+
+<!-- #region -->
+**Alerta** 
+
+Não recomendamos que você faça qualquer alteração no equipamento de sensoriamento, caso não tenha conhecimento em eletrônica, e também porque se abrir o dispositivo, perderá a garantia do fornecedor. O recomendado é a troca por equipamento que permita customização, ou seja, ligar e desligar o alarme sonoro. Neste caso, considere o ambiente onde está implantado e se a norma permite ausência de alarme sonoro.
+
+
+**Ajustes**
+
+Esta prova de conceito, levou em consideração a resposta do cliente, e com base em sua reclamação, desligamos o alarme sonoro do dispositivo e implementamos um sistema aviso por mensagens. 
+
+Figura 2. Item (3) Dispositivo (IoT) ESP8266 com software embarcado em Python, com a função de monitoramento e envio de mensagens de alertas sempre que um incidente ocorrer.
+
+<!-- #endregion -->
+
+**Desafios**
+
+1) desligar o aviso sono fisicamente no equipamento;
+
+2) adaptar um dispositivo externo, que captará o sinal de alarme, quando ocorrer e enviará uma mensagem registrando que o evento - alarme de vazamento foi acionado e o registro do gás foi fechado.
+
+
+O sistema detecção e controle do vazamento não depende do aviso sonoro ou da mensagen, porém, precisamos saber quando houve o incidente para que possamos reestabelecer o gás na cozinha e apurar e corrigir a causa raiz deste problema. Lembrando que, neste exemplo hipotético, a causa raiz é o esquecimento do gás aberto pelo cliente. Extrapolando, outra solução seria trocar o fogão por outro de indução elétrico, sem gás. 
 
 ```python
 
