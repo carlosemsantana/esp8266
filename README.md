@@ -114,22 +114,22 @@ De acordo com o fabricante o sensor detecção de gás deve estar no mínimo 80 
 **Resuldados**
 
 
-Após implantação do sistema de detecção, em um período de 30 dia de testes. Houveram 3 alertas de vazamento, o sistema de controle foi acionado, o atuador no registro do gás foi acionado, interrompendo o fluxo de gás com sucesso.
+Após a implantação do sistema de detecção, durante um período de 30 dias de testes, houve três alertas de vazamento, sendo que o sistema de controle foi acionado e o atuador no registro do gás foi acionado, interrompendo o fluxo de gás com êxito.
 
 
 **Satisfação do cliente**
 
-Do ponto de vista técnico, o sistema funcionou perfeitamente, porém, o cliente não estava satisfeito, o motivo da insatisfação do cliente foi, o alarme sonoro do dispositivo lhe causava incômodo.
+Do ponto de vista técnico, o sistema funcionou perfeitamente, mas o cliente não estava satisfeito, pois o alarme sonoro do dispositivo o incomodava.
 
 <!-- #region -->
 **Alerta** 
 
-Não recomendamos que você faça qualquer alteração no equipamento de sensoriamento, caso não tenha conhecimento em eletrônica, e também porque se abrir o dispositivo, perderá a garantia do fornecedor. O recomendado é a troca por equipamento que permita customização, ou seja, ligar e desligar o alarme sonoro. Neste caso, considere o ambiente onde está implantado e se a norma permite ausência de alarme sonoro.
+Não recomendamos que você faça qualquer alteração no equipamento de sensoreamento, caso não tenha conhecimento em eletrônica, e também porque se abrir o dispositivo, perderá a garantia do fornecedor. O recomendado é a troca por equipamento que permita customização, ou seja, ligar e desligar o alarme sonoro. Neste caso, considere o ambiente onde está implantado e se a norma permite a ausência de alarme sonoro.
 
 
 **Ajustes**
 
-Esta prova de conceito, levou em consideração a resposta do cliente, e com base em sua reclamação, desligamos o alarme sonoro do dispositivo e implementamos um sistema aviso por mensagens. 
+Esta prova de conceito levou em consideração a resposta do cliente e, com base na sua reclamação, desativamos o alarme sonoro do dispositivo e implementamos um sistema de alerta por mensagens.
 
 Figura 2. Item (3) Dispositivo (IoT) ESP8266 com software embarcado em Python, com a função de monitoramento e envio de mensagens de alertas sempre que um incidente ocorrer.
 
@@ -142,7 +142,13 @@ Figura 2. Item (3) Dispositivo (IoT) ESP8266 com software embarcado em Python, c
 2) adaptar um dispositivo externo, que captará o sinal de alarme, quando ocorrer e enviará uma mensagem registrando que o evento - alarme de vazamento foi acionado e o registro do gás foi fechado.
 
 
-O sistema detecção e controle do vazamento não depende do aviso sonoro ou da mensagen, porém, precisamos saber quando houve o incidente para que possamos reestabelecer o gás na cozinha e apurar e corrigir a causa raiz deste problema. Lembrando que, neste exemplo hipotético, a causa raiz é o esquecimento do gás aberto pelo cliente. Extrapolando, outra solução seria trocar o fogão por outro de indução elétrico, sem gás. 
+O sistema de detecção e controle de vazamento não depende de aviso sonoro ou mensagem, porém, precisamos saber quando houve o incidente para que possamos reestabelecer o gás na cozinha , apurar e corrigir a causa raiz deste problema. Lembrando que, neste exemplo hipotético, a causa raiz é o esquecimento do gás aberto pelo cliente. Extrapolando, outra solução seria substituir o fogão por outro de indução elétrica, sem gás.
+
+
+**Adaptação**
+
+
+(em desenvolvimento)
 
 ```python
 
