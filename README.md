@@ -1,4 +1,4 @@
-# Explorando o Potencial do ESP8266 e do MicroPython para o Desenvolvimento de Projetos IoT
+# Explorando o Potencial do ESP8266 ou ESP32 e do MicroPython para o Desenvolvimento de Projetos IoT
 
 
 >"A Internet das Coisas nos ajuda a conectar o mundo real com o virtual, criando uma grande rede com inúmeras possibilidades". - Stephen Hawking
