@@ -137,9 +137,9 @@ Figura 2. Item (3) Dispositivo (IoT) ESP8266 com software embarcado em Python, c
 
 **Desafios**
 
-1) desligar o aviso sono fisicamente no equipamento;
+1) desligar o aviso sonoro fisicamente no equipamento;
 
-2) adaptar um dispositivo externo, que captará o sinal de alarme, quando ocorrer e enviará uma mensagem registrando que o evento - alarme de vazamento foi acionado e o registro do gás foi fechado.
+2) adaptar um dispositivo externo, que captará o sinal de alarme, e quando ocorrer um incidente, o alerta será interceptado e uma mensagem registrando este evento - alarme de vazamento foi acionado - será enviada ao administrador.
 
 
 O sistema de detecção e controle de vazamento não depende de aviso sonoro ou mensagem, porém, precisamos saber quando houve o incidente para que possamos reestabelecer o gás na cozinha , apurar e corrigir a causa raiz deste problema. Lembrando que, neste exemplo hipotético, a causa raiz é o esquecimento do gás aberto pelo cliente. Extrapolando, outra solução seria substituir o fogão por outro de indução elétrica, sem gás.
@@ -147,9 +147,178 @@ O sistema de detecção e controle de vazamento não depende de aviso sonoro ou 
 
 **Adaptação**
 
+Para adaptação é preciso identicar na placa do Sensor, o GND, sinal do alarme e uma fonte de energia de 5V para alimentar o ESP8266 conforme ilustrado no diagrama figura 5.
 
-(em desenvolvimento)
+
+<img src="img/fig6.png"  width="98%"  style="display:inline-block;float:center; margin-right:10px;">
+
+
+**ESP8266**
+
+
+Para esta prova de conceito, vamos embarcar no ESP8266 o Micropython.
+
+O firmware adotado foi: https://micropython.org/resources/firmware/esp8266-20220618-v1.19.1.bin
+
+referencia:
+http://docs.micropython.org/en/latest/esp8266/tutorial/intro.html#deploying-the-firmware
+    
+
+<!-- #region -->
+**Build**
 
 ```python
+$ pip install esptool
 
+$ esptool --port /dev/ttyUSB0 erase_flash
+
+$ esptool --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect 0 esp8266-ota20220618-v1.19.1.bin
 ```
+<!-- #endregion -->
+
+<img src="img/fig4.png"  width="98%"  style="display:inline-block;float:center; margin-right:10px;">
+
+
+**Hipótese**
+
+O contexto é que, sempre que o dispositivo detectar um nível de vazamento de gás acima do limite estabelecido, um alarme é acionado, esse alarme é um sinal de até 3V, que vai para a válvula solenóide que fecha o fluxo de gás quando acionado. 
+
+
+Qual é o problema crítico no diagrama figura 5? 
+
+Provar que será possível receber um sinal de até 3V na porta de entrada GPIO4 ou D4 e enviar uma mensagem de alerta. 
+
+
+**Prova de Conceito**
+
+
+Para testar o conceito, escrevi algumas linhas de código python, que envia uma mensagem de alerta sempre que o alarme for acionado.
+
+<!-- #region -->
+```python
+# Arquivo boot.py
+import network
+import machine
+wlan = network.WLAN(network.STA_IF)
+wlan.active(True)
+if not wlan.isconnected():
+    print('conectando na rede local...')
+    # Dados de conexão rede sem fio
+    wlan.connect('SSID do seu Wi-Fi', 'SENHA')
+    while not wlan.isconnected():
+        pass
+    print('Rede: ', wlan.ifconfig())
+print('conectado na rede local.')
+print('Rede: ', wlan.ifconfig())
+
+# Arquivo main.py
+from machine import Pin
+import sys
+# Habilita a porta GPIO4 como porta de entrada (IN) e ativa o resistor
+# A porta inicia desligada (OFF)
+p0 = Pin(4, Pin.IN, Pin.PULL_DOWN)
+def main():
+    if p0.value():
+        print("Enviar sinal de alerta!")
+while True:
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("Exit")
+        sys.exit(0)
+```
+<!-- #endregion -->
+
+**Build**
+
+<!-- #region -->
+```python
+# Uso o programa AMPY para gerenciar o sistema de arquivos do NodeMCU através da terminal do Linux.
+
+# Para enviar os arquivos:     
+$ ampy --port /dev/ttyUSB0 --baud 115200 put boot.py
+$ ampy --port /dev/ttyUSB0 --baud 115200 put main.py
+``` 
+<!-- #endregion -->
+
+**Testes**
+
+<!-- #region -->
+```python
+# Para Listar o conteúdo do sistema de arquivos do dispositivo:     
+$ ampy --port /dev/ttyUSB0 --baud 115200 ls
+``` 
+<!-- #endregion -->
+
+<img src="img/fig7.png"  width="98%"  style="display:inline-block;float:center; margin-right:10px;">
+
+<!-- #region -->
+```python
+# Para executar o boot no sistema:     
+$ ampy --port /dev/ttyUSB0 --baud 115200 run boot.py
+``` 
+<!-- #endregion -->
+
+<img src="img/fig8.png"  width="98%"  style="display:inline-block;float:center; margin-right:10px;">
+
+<!-- #region -->
+```python
+# Teste de rede, usando o IP do dispositivo.     
+$ ping 192.168.0.113
+``` 
+<!-- #endregion -->
+
+<img src="img/fig9.png"  width="98%"  style="display:inline-block;float:center; margin-right:10px;">
+
+
+A coleta do sinal do alarme e envio da mensagem funcionou no sistema local de forma estável, sempre que um sinal foi acionado no sensor, foi possível identificar e acionar envio de mensagens.
+
+
+Para simular a captura do sinal, montamos um experimento físico, com uma bateria e manualmente, alimentamos a porta GPIO4 do dispositivo, conforme ilustrado na figura 8.1. a seguir. O resultado precisava ser a detecção do sinal ligado ou desligado na porta.
+
+
+<img src="img/fig11.png"  width="98%"  style="display:inline-block;float:center; margin-right:10px;">
+
+
+**Resultado do experimento simulado no console**
+
+
+<img src="img/fig10.png"  width="98%"  style="display:inline-block;float:center; margin-right:10px;">
+
+
+**Conclusão da prova de conceito**
+
+
+A simulação do processo de captura do sinal de alarme funcionou, sempre que ocorre um alarme e chega na porta GPIO4 ~3V, é possível identificar essa "rampa", e então realizamos o envio do sinal de alarme.
+
+
+**Desafio**
+
+Como desafio, seria interessante implementar a prova de conceito, toda vez que o sinal de alarme for detectado, envie para o Broker IOT na AWS, registre o envento em uma banco de dados NSQL e envie um SMS para o usuário administador. 
+
+
+**Diagrama de Arquitetura da Prova de Conceito**
+
+
+<img src="img/fig12.png"  width="98%"  style="display:inline-block;float:center; margin-right:10px;">
+
+
+**Conclusão**
+
+
+A prova de conceito implementada foi um sucesso e mostrou que o projeto tem o potencial de se tornar uma solução altamente eficaz. A prova de conceito permitiu a validação da viabilidade técnica do projeto, bem como a sua aplicabilidade prática.
+
+
+   
+
+
+Carlos Eugênio
+
+Linkedin: https://www.linkedin.com/in/carloseugenio/
+
+
+Referências
+
+[ 1 ] https://docs.micropython.org/en/latest/index.html<br>
+[ 2 ] https://docs.aws.amazon.com/?nc2=h_ql_doc_do<br>
+[ 3 ] https://www.python.org/

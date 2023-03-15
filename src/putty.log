@@ -1,0 +1,32 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2023.03.07 16:00:05 =~=~=~=~=~=~=~=~=~=~=~=
+
+>>> import esp
+>>> import esp
+>>> import machine
+>>> esp.
+LOG_DEBUG       LOG_ERROR       LOG_INFO        LOG_NONE
+LOG_VERBOSE     LOG_WARNING     dht_readinto    flash_erase
+flash_read      flash_size      flash_user_start
+flash_write     gpio_matrix_in  gpio_matrix_out
+osdebug
+>>> esp.
+LOG_DEBUG       LOG_ERROR       LOG_INFO        LOG_NONE
+LOG_VERBOSE     LOG_WARNING     dht_readinto    flash_erase
+flash_read      flash_size      flash_user_start
+flash_write     gpio_matrix_in  gpio_matrix_out
+osdebug
+>>> esp.LOLOGVER_VERBOSE
+5
+>>> esp.LOG_VERBOSE 1
+Traceback (most recent call last):
+  File "<stdin>", line 1
+SyntaxError: invalid syntax
+>>> esp.LOG_VERBOSE 1
+5
+>>> IFCONFIGifconfig()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'ifconfig' isn't defined
+>>> =~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2023.03.07 16:03:25 =~=~=~=~=~=~=~=~=~=~=~=
+
+>>> 

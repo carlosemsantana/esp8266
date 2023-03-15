@@ -1,0 +1,2 @@
+ampy --port /dev/ttyUSB0 --baud 115200 get boot.py
+
