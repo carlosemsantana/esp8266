@@ -294,7 +294,7 @@ A simulação do processo de captura do sinal de alarme funcionou, sempre que oc
 
 **Desafio**
 
-Como desafio, seria interessante implementar a prova de conceito, toda vez que o sinal de alarme for detectado, envie para o Broker IOT na AWS, registre o envento em uma banco de dados NSQL e envie um SMS para o usuário administador. 
+Como desafio, seria interessante implementar a prova de conceito, toda vez que o sinal de alarme for detectado, envie-o para o Broker IOT na AWS, registre o evento em uma banco de dados NSQL e envie um SMS para o usuário administador. 
 
 
 **Diagrama de Arquitetura da Prova de Conceito**
